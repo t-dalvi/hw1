@@ -145,6 +145,8 @@ CREATE TABLE represented_by (
 -- Insert data into your database that reflects the sample data shown above
 -- Use hard-coded foreign key IDs when necessary
 -- TODO!
+INSERT INTO movies (title, release_year, rating_id, studio_id)
+VALUES ("Batman Begins", 2005, 3, 1);
 
 -- Prints a header for the movies output
 .print "Movies"
@@ -153,7 +155,7 @@ CREATE TABLE represented_by (
 
 -- ***TODO!***
 -- The SQL statement for the movies output goes here.
-
+SELECT title, release_year, rating_id, studio_id FROM movies;
 -- Example output:
 -- Movies
 -- ======
