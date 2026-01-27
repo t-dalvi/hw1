@@ -101,6 +101,7 @@ DROP TABLE IF EXISTS stars;
 DROP TABLE IF EXISTS agents;
 DROP TABLE IF EXISTS ratings;
 DROP TABLE IF EXISTS represented_by;
+DROP TABLE IF EXISTS studios;
 
 -- Create new tables, according to your domain model
 -- TODO!
@@ -142,11 +143,53 @@ CREATE TABLE represented_by (
     end_date NUMBER
 );
 
+CREATE TABLE studios (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT
+);
+
 -- Insert data into your database that reflects the sample data shown above
 -- Use hard-coded foreign key IDs when necessary
 -- TODO!
+
+INSERT INTO studios (name) 
+VALUES ("Warner Bros.");
+
+INSERT INTO ratings (ratings) 
+VALUES ("G"), ("PG"), ("PG-13"), ("R");
+
 INSERT INTO movies (title, release_year, rating_id, studio_id)
-VALUES ("Batman Begins", 2005, 3, 1);
+VALUES ("Batman Begins", 2005, 3, 1), ("The Dark Knight", 2008, 3, 1), ("The Dark Knight Rises", 2012, 3, 1);
+
+INSERT INTO actors (name)
+VALUES ("Christian Bale"), ("Michael Caine"), ("Liam Neeson"), ("Katie Holmes"), ("Gary Oldman"), ("Heath Ledger"), 
+("Aaron Eckhart"), ("Maggie Gyllenhaal"), ("Tom Hardy"), ("Joseph Gordon-Levitt"), ("Anne Hathaway");
+
+INSERT INTO stars (movie_id, actor_id, character_name)
+VALUES 
+    (1, 1, "Bruce Wayne"),
+    (1, 2, "Alfred"),
+    (1, 3, "Ra's Al Ghul"),
+    (1, 4, "Rachel Dawes"),
+    (1, 5, "Commissioner Gordon"),
+    (2, 1, "Bruce Wayne"),
+    (2, 6, "Joker"),
+    (2, 7, "Harvey Dent"),
+    (2, 2, "Alfred"),
+    (2, 8, "Rachel Dawes"),
+    (3, 1, "Bruce Wayne"),
+    (3, 5, "Commissioner Gordon"),
+    (3, 9, "Bane"),
+    (3, 10, "John Blake"),
+    (3, 11, "Selina Kyle");
+
+INSERT INTO agents (name) 
+VALUES ("Tejas Dalvi"); 
+
+INSERT INTO represented_by (actor_id, agent_id, start_date, end_date) 
+VALUES (1, 1, "December 2, 1997", NULL);
+
+
 
 -- Prints a header for the movies output
 .print "Movies"
@@ -155,7 +198,10 @@ VALUES ("Batman Begins", 2005, 3, 1);
 
 -- ***TODO!***
 -- The SQL statement for the movies output goes here.
-SELECT title, release_year, rating_id, studio_id FROM movies;
+SELECT movies.title, movies.release_year, ratings.ratings, studios.name 
+FROM movies 
+INNER JOIN ratings ON movies.rating_id = ratings.id 
+INNER JOIN studios ON movies.studio_id = studios.id;
 -- Example output:
 -- Movies
 -- ======
