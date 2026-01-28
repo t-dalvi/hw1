@@ -108,9 +108,9 @@ DROP TABLE IF EXISTS studios;
 CREATE TABLE movies (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     title TEXT,
-    release_year NUMBER,
-    rating_id NUMBER,
-    studio_id NUMBER
+    release_year INTEGER,
+    rating_id INTEGER,
+    studio_id INTEGER
 );
 
 CREATE TABLE actors (
@@ -120,8 +120,8 @@ CREATE TABLE actors (
 
 CREATE TABLE stars (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    movie_id NUMBER,
-    actor_id NUMBER,
+    movie_id INTEGER,
+    actor_id INTEGER,
     character_name TEXT
 );
 
@@ -137,10 +137,10 @@ CREATE TABLE ratings (
 
 CREATE TABLE represented_by (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    actor_id NUMBER,
-    agent_ID NUMBER,
-    start_date NUMBER,
-    end_date NUMBER
+    actor_id INTEGER,
+    agent_ID INTEGER,
+    start_date INTEGER,
+    end_date INTEGER
 );
 
 CREATE TABLE studios (
@@ -217,6 +217,11 @@ INNER JOIN studios ON movies.studio_id = studios.id;
 
 -- ***TODO!***
 -- The SQL statement for the cast output goes here.
+SELECT movies.title, actors.name, stars.character_name
+FROM stars 
+INNER JOIN movies ON stars.movie_id = movies.id
+INNER JOIN actors ON stars.actor_id = actors.id;
+
 
 -- Example output:
 -- Top Cast
@@ -245,6 +250,11 @@ INNER JOIN studios ON movies.studio_id = studios.id;
 
 -- ***TODO!***
 -- The SQL statement for the represented actor(s) output goes here.
+SELECT actors.name
+FROM actors
+INNER JOIN represented_by on actors.id = represented_by.actor_id
+INNER JOIN agents ON represented_by.agent_id = agents.id
+WHERE agents.name = "Tejas Dalvi";
 
 -- Example output:
 -- Represented by agent
